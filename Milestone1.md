@@ -31,10 +31,14 @@ Our visualisations are crafted for basketball enthusiasts eager to gain deeper i
 
  ## Related work
 
- In basketball analysis, looking closely at NBA shot data has given experts a deep look into how players perform, their shooting skills, and how teams plan their games. Among the many ways to show this information, shot charts are a favourite. These charts show where on the court players tend to shoot from and how often they score.
+ In basketball analysis, looking closely at NBA shot data has given experts a deep look into how players perform, their shooting skills, and how teams plan their games. Among the many ways to show this information, shot charts are a favourite similar to the one we show here. These charts show where on the court players tend to shoot from and how often they score.
+ ![image info](imgs/Stephen_Curry_shot_chart.png)
+
 Besides,we discovered a comprehensive analysis for our second dataset which delves into different factors using mostly histograms and scatter plots. This detailed work can be found [here](https://www.kaggle.com/code/mariodelacruzjr/nba-shoot-analysis).
 
-A particularly innovative visualisation that has garnered attention is one developed by Second Spectrum, the Official Optical Tracking Provider of the NBA. This visualisation showcases real-time shot accuracy of players from different zones on the court, offering a dynamic perspective on player efficiency from specific areas of the field.
+A particularly innovative visualisation that has garnered attention is one developed by Second Spectrum, the Official Optical Tracking Provider of the NBA. This visualisation as can be seen below showcases real-time shot accuracy of players from different zones on the court, offering a dynamic perspective on player efficiency from specific areas of the field.
+ ![image info](imgs/real_time_shot_percentage.png)
+
 
 For our project, we aim to build upon this foundation by incorporating defensive metrics to further enrich the analysis of shot accuracy. Unlike traditional visualisations that focus solely on the accuracy of players from different zones, our approach intends to consider the defender's presence and proximity as significant factors. Recognizing that an open shot by a less effective player, or a mismatch against an inferior defender, can sometimes be more advantageous than a closely contested shot by a top shooter against an elite defender, we plan to integrate these nuances into our analysis. By doing so, we seek to provide a more holistic understanding of shot selection and its outcomes, taking into account not just the shooter's position but also the defensive context.
 
