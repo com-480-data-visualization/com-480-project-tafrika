@@ -3,6 +3,9 @@
 ## Introduction
 Understanding how various factors affect shot outcomes is vital for players, coaches, and analysts alike. For example, the urgency induced by a dwindling shot clock might significantly affect a player's decision-making and accuracy. Such situations often lead to rushed shots or, conversely, highly practiced, clutch shooting under pressure. By analyzing how these conditions influence shot success, stakeholders can refine strategies, enhance player training, and improve game-time decisions.
 
+The skeleton of the website can be found [here](
+    https://com-480-data-visualization.github.io/com-480-project-tafrika/)
+
 
 ## Visualization 1: Spatial Visualization Approach
 To capture and visualize the effects of these factors, our approach will focus on representing this data spatially on a basketball court. This method will allow users to see not just the statistical data but also the spatial distribution and impact of factors like shot clock time, dribbling, and player positioning. Visualizing this data on a court will provide an intuitive understanding of where players are most effective under specific conditions and how factors like time pressure impact shooting from different court zones.
