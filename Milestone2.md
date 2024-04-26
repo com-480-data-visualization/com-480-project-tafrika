@@ -13,7 +13,7 @@ To capture and visualize the effects of these factors, our approach will focus o
 
 **MVP**:
 
-Interactive Scatter Map on a Basketball Court: This visualization will display shots made and missed, marked as green and red dots, respectively, on a half-court diagram. Users can filter results based on different seasons, the time left on the shot clock, and the number of dribbles taken before the shot. This allows for a dynamic analysis of how different conditions affect shot outcomes.
+Interactive Scatter Map on a Basketball Court: This visualization will display shots made and missed, marked as green and red dots, respectively, on a half-court diagram. Users can filter results based on different seasons for example, or the time left on the shot clock, and the number of dribbles taken before the shot. This allows for a dynamic analysis of how different conditions affect shot outcomes.
 
 
 **EXTRAS**:
@@ -73,4 +73,4 @@ Quarter-by-Quarter Performance Lines: A dynamic line graph that ranks players ba
 
 - D3.js (Lectures: D3.js, Interactions): Interactive features/animations, Loading multiple datasets
 - Chroma.js (Lecture: Perception Colors): Color scales
-- Javascript, HTML and CSS (Lectures: Javascript, Basic Web Development): Website implementation, based on the following [template](https://github.com/themewagon/resume-bootstrap4?tab=readme-ov-file)
+- Javascript, HTML and CSS (Lectures: Javascript, Basic Web Development): Website implementation, based on the following [template](https://github.com/technext/resume-bootstrap4)
