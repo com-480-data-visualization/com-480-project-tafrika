@@ -7,7 +7,8 @@ Understanding how various factors affect shot outcomes is vital for players, coa
 ## Visualization 1: Spatial Visualization Approach
 To capture and visualize the effects of these factors, our approach will focus on representing this data spatially on a basketball court. This method will allow users to see not just the statistical data but also the spatial distribution and impact of factors like shot clock time, dribbling, and player positioning. Visualizing this data on a court will provide an intuitive understanding of where players are most effective under specific conditions and how factors like time pressure impact shooting from different court zones.
 
-![Spatial Visualization Approach](imgs/viz1.png)
+<img src="imgs/viz1.png" alt="Spatial Visualization Approach" width="50%"/>
+
 ###### Sketch edited from: https://coolinfographics.com/blog/2016/3/28/ballr-interactive-nba-shot-charts.html
 
 **MVP**:
@@ -29,7 +30,8 @@ Interactive Scatter Map on a Basketball Court: This visualization will display s
 ## Visualization 2: Comparative Analysis Approach
 To provide insights into player performance metrics, we'll implement a comparative visualization that plots NBA players on a scatter plot based on two selected metrics. This comparison will illuminate each player's strengths and areas for improvement relative to their peers, fostering a deeper understanding of individual contributions to the league. By viewing players' positions based on these metrics, users can discern patterns and anomalies that may not be apparent in traditional statistical analyses.
 
-![Comparative Analysis Approach](imgs/viz2.png)
+<img src="imgs/viz2.png" alt="Comparative Analysis Approach" width="50%"/>
+
 ###### Sketch edited from: https://www.celticsblog.com/2022/9/15/23351793/boston-celtics-marcus-smart-derrick-white-malcolm-brogdon-defense-backcourt-point-guard
 
 **MVP**:
@@ -52,7 +54,8 @@ Comparative Player Scatter Plot: This core visualization will place players on a
 
 The intent of this visualization is to evaluate and display the quarter-by-quarter performance of NBA players, highlighting their scoring prowess or other metrics as the game progresses. This will underscore which players excel in crucial periods, particularly in the 4th quarter, often seen as the decisive phase of the game.
 
-![Quarter-by-Quarter Performance Ranking Graph](imgs/viz3.png)
+<img src="imgs/viz3.png" alt="Quarter-by-Quarter Performance Ranking Graph" width="30%"/>
+
 ###### Sketch edited from: https://www.tiktok.com/@nbarecappod/video/7346689005028740395?_t=8lqgsvhjdiq&_r=1
 
 **MVP**: 
