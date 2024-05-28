@@ -8,6 +8,9 @@
   <style>
     body {
       font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     .axis path,
     .axis line {
@@ -29,41 +32,81 @@
     }
     .filter-container {
       margin-top: 20px;
-    }
-    .filter-container label {
-      margin-right: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
     }
     .filter-group {
       margin-bottom: 10px;
     }
+    .content-container {
+      display: flex;
+      gap: 20px;
+      margin-top: 20px;
+      width: 100%;
+    }
+    .plot-container {
+      flex-grow: 1;
+      min-width: 0;
+    }
+    .player-card {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      width: 300px;
+    }
+    .player-card h3 {
+      margin-top: 0;
+    }
+    svg {
+      display: block;
+      width: 100%;
+    }
   </style>
 </head>
 <body>
-    <div class="filter-container">
-        <div class="filter-group">
-          <label for="metricSelect">    Metric: </label>
-          <select id="metricSelect">
-            <option value="PTS_PER_QUARTER">Points</option>
-            <option value="THREE_PTS_MADE_COUNT">Attempted 3 PTS Field Goals Count</option>
-            <option value="FIELD_GOAL_PERCENTAGE">%FGM, Percent of Field Goals Made</option>
-            <option value="THREE_PTS_PERCENTAGE_MADE">Percent of 3 PTS Field Goals Made</option>
-          </select>
-          <label for="seasonSelect">    Season: </label>
-          <select id="seasonSelect"></select>
-          <label for="playerSelect">    Player: </label>
-          <select id="playerSelect"></select>
-        </div>
-        <div class="filter-group">
-          <label for="positionSelect">  Position: </label>
-          <select id="positionSelect">
-            <option value="all">All Positions</option>
-          </select>
-          <label for="teamSelect">  Team: </label>
-          <select id="teamSelect">
-            <option value="all">All Teams</option>
-          </select>
-        </div>
+  <div class="filter-container">
+    <div class="filter-group">
+      <label for="metricSelect">Metric: </label>
+      <select id="metricSelect">
+        <option value="PTS_PER_QUARTER">Points</option>
+        <option value="THREE_PTS_MADE_COUNT">Attempted 3 PTS Field Goals Count</option>
+        <option value="FIELD_GOAL_PERCENTAGE">%FGM, Percent of Field Goals Made</option>
+        <option value="THREE_PTS_PERCENTAGE_MADE">Percent of 3 PTS Field Goals Made</option>
+        <!-- Add more metrics as needed -->
+      </select>
+      <label for="seasonSelect">Season: </label>
+      <select id="seasonSelect"></select>
+      <label for="playerSelect">Player: </label>
+      <select id="playerSelect"></select>
+    </div>
+    <div class="filter-group">
+      <label for="positionSelect">Position: </label>
+      <select id="positionSelect">
+        <option value="all">All Positions</option>
+      </select>
+      <label for="teamSelect">Team: </label>
+      <select id="teamSelect">
+        <option value="all">All Teams</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="content-container">
+    <div class="plot-container">
+      <svg width="900" height="500"></svg>
+    </div>
+      <div class="player-card" id="playerCard">
+        <h3 id="playerName">Player Name</h3>
+        <p><strong>Position:</strong> <span id="playerPosition">N/A</span></p>
+        <p><strong>Team:</strong> <span id="playerTeam">N/A</span></p>
+        <p><strong>Points per Quarter:</strong> <span id="playerPoints">N/A</span></p>
+        <p><strong>Attempted 3PTS per Quarter:</strong> <span id="player3ptsAttempted">N/A</span></p>
+        <p><strong>%FGM per Quarter:</strong> <span id="playerFGM">N/A</span></p>
+        <p><strong>% 3PTS Made per Quarter:</strong> <span id="player3ptsMade">N/A</span></p>
+        <!-- Add more statistics as needed -->
       </div>
+    </div>
 
 
   <svg width="960" height="500"></svg>

@@ -1,5 +1,5 @@
-const margin = {top: 20, right: 20, bottom: 30, left: 50},
-    width = 960 - margin.left - margin.right,
+const margin = {top: 20, right: 220, bottom: 30, left: 50},
+    width = 900 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
 const parseDate = d3.timeParse("%Y-%m-%d");
@@ -26,6 +26,16 @@ const playerSelect = d3.select("#playerSelect");
 const seasonSelect = d3.select("#seasonSelect");
 const positionSelect = d3.select("#positionSelect");
 const teamSelect = d3.select("#teamSelect");
+
+const playerCard = {
+    name: document.getElementById("playerName"),
+    position: document.getElementById("playerPosition"),
+    team: document.getElementById("playerTeam"),
+    points: document.getElementById("playerPoints"),
+    three_points_attempted: document.getElementById("player3ptsAttempted"),
+    fgm: document.getElementById("playerFGM"),
+    three_points_made: document.getElementById("player3ptsMade"),
+  };
 
 d3.csv("stats_per_quarter.csv").then(data => {
   data.forEach(d => {
@@ -75,7 +85,10 @@ d3.csv("stats_per_quarter.csv").then(data => {
         .attr("value", d => d)
         .text(d => d);
     
-  playerSelect.on("change", update);
+  playerSelect.on("change", () => {
+    updatePlayerCard();
+    update();
+  });
   metricSelect.on("change", update);
   positionSelect.on("change", () => {
     updatePlayerSelect();
@@ -110,7 +123,34 @@ d3.csv("stats_per_quarter.csv").then(data => {
         .enter()
         .append("option")
         .text(d => d);
+
+    updatePlayerCard();
     }
+
+  function updatePlayerCard() {
+        const selectedPlayer = playerSelect.node().value;
+        const selectedSeason = seasonSelect.node().value;
+        const playerData = data.filter(d => d.PLAYER_NAME === selectedPlayer && d.SEASON_2 === selectedSeason);
+    
+        if (playerData.length > 0) {
+          const player = playerData[0]; // Assuming data contains consistent records for each player/season
+    
+          playerCard.name.textContent = player.PLAYER_NAME;
+          playerCard.position.textContent = player.POSITION;
+          playerCard.team.textContent = player.TEAM_NAME;
+          playerCard.points.textContent = d3.mean(playerData, d => d.PTS_PER_QUARTER).toFixed(2);
+          playerCard.three_points_attempted.textContent = d3.mean(playerData, d => d.THREE_PTS_MADE_COUNT).toFixed(2);
+          playerCard.fgm.textContent = d3.mean(playerData, d => d.FIELD_GOAL_PERCENTAGE).toFixed(2);
+          playerCard.three_points_made.textContent = d3.mean(playerData, d => d.THREE_PTS_PERCENTAGE_MADE).toFixed(2);
+        } else {
+          playerCard.name.textContent = "Player Name";
+          playerCard.position.textContent = "N/A";
+          playerCard.team.textContent = "N/A";
+          playerCard.points.textContent = "N/A";
+          playerCard.rebounds.textContent = "N/A";
+          playerCard.assists.textContent = "N/A";
+        }
+      }
 
   function update() {
 
@@ -186,5 +226,6 @@ d3.csv("stats_per_quarter.csv").then(data => {
     }
   }
 
+  updatePlayerSelect();
   update();
 });
