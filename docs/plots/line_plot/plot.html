@@ -27,14 +27,43 @@
       fill: none;
       pointer-events: all;
     }
+    .filter-container {
+      margin-top: 20px;
+    }
+    .filter-container label {
+      margin-right: 10px;
+    }
+    .filter-group {
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 <body>
-  <label for="seasonSelect">Season: </label>
-  <select id="seasonSelect"></select>
-
-  <label for="playerSelect">Player: </label>
-  <select id="playerSelect"></select>
+    <div class="filter-container">
+        <div class="filter-group">
+          <label for="metricSelect">    Metric: </label>
+          <select id="metricSelect">
+            <option value="PTS_PER_QUARTER">Points</option>
+            <option value="THREE_PTS_MADE_COUNT">Attempted 3 PTS Field Goals Count</option>
+            <option value="FIELD_GOAL_PERCENTAGE">%FGM, Percent of Field Goals Made</option>
+            <option value="THREE_PTS_PERCENTAGE_MADE">Percent of 3 PTS Field Goals Made</option>
+          </select>
+          <label for="seasonSelect">    Season: </label>
+          <select id="seasonSelect"></select>
+          <label for="playerSelect">    Player: </label>
+          <select id="playerSelect"></select>
+        </div>
+        <div class="filter-group">
+          <label for="positionSelect">  Position: </label>
+          <select id="positionSelect">
+            <option value="all">All Positions</option>
+          </select>
+          <label for="teamSelect">  Team: </label>
+          <select id="teamSelect">
+            <option value="all">All Teams</option>
+          </select>
+        </div>
+      </div>
 
 
   <svg width="960" height="500"></svg>
