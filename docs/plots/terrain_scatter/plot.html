@@ -20,20 +20,58 @@
     </head>
 
     <body>
-        
-        <select id="season-select">
-            <!--<option value="none">--Season--</option>-->
-        </select>
-        <select id="team-select">
-            <!--<option value="none">--Team--</option>-->
-        </select>
-        <select id="player-select">
-            <!--<option value="none">--Player--</option>-->
-        </select>
-        <div id="filter-container">
+        <table class = "selection-table" style="empty-cells: show;">
+            <tr>
+                <td>
+                    <label for="season-select" class="season-select-class">Season:</label>
+                </td>
+                <td>
+                    <label for="team-select" class="team-select-class">Team:</label>
+                </td>
+                <td>
+                    <label for="player-select" class="player-select-class">Player:</label>
+                </td>
+                <td style="width: 100px;">&nbsp;</td>
+                <td>
+                    <label for="filter-column-select" class="filter-container">Filter:</label>
+                </td>
+                <td>
+                    <label for="filter-value-select" class="filter-container filter-value-select">Value:</label>
+                </td>
+            
+            </tr>
+            <tr>
+                <td>                    
+                    <select id="season-select" class="season-select-class">
+                        <!--<option value="none">--Season--</option>-->
+                    </select>
+                </td>
+                
+                <td>
+                    <select id="team-select" class ="team-select-class">
+                        <!--<option value="none">--Team--</option>-->
+                    </select>
+                <td>
+                    <select id="player-select" class="player-select-class">
+                        <!--<option value="none">--Player--</option>-->
+                    </select>
+                </td>
+                <td style="width: 100px;">&nbsp;</td>
+                
+                <td >
+                    <select id="filter-column-select" class="filter-container">
+                        <!--<option value="none">--Player--</option>-->
+                    </select>
+                </td>
+                <td>
+                    <select id="filter-value-select" class ="filter-container filter-value-select">
+                        <!--<option value="none">--Player--</option>-->
+                    </select>
+                </td>
+            </tr>
             
 
-        </div>
+        </table>
 
 
 
