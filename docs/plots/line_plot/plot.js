@@ -48,9 +48,26 @@ d3.csv("stats_per_quarter.csv").then(data => {
     d.PLAYER_ID = d.PLAYER_ID;
   });
 
+  function calculatePlayerPoints(data) {
+    const playerPoints = d3.rollup(
+      data,
+      v => d3.mean(v, d => d.PTS_PER_QUARTER),
+      d => d.PLAYER_NAME
+    );
+  
+    // Convert the map to an array and sort by points
+    const sortedPlayers = Array.from(playerPoints, ([PLAYER_NAME, POINTS]) => ({ PLAYER_NAME, POINTS }))
+      .sort((a, b) => d3.descending(a.POINTS, b.POINTS))
+      .map(d => d.PLAYER_NAME);
+  
+    return sortedPlayers;
+  }
+  
+
   console.log("Data loaded:", data);
 
-  const players = [...new Set(data.map(d => d.PLAYER_NAME))];
+//   const players = [...new Set(data.map(d => d.PLAYER_NAME))];
+  const players = calculatePlayerPoints(data);
   const seasons = [...new Set(data.map(d => d.SEASON_2))];
   const positions = [...new Set(data.map(d => d.POSITION))];
   const teams = [...new Set(data.map(d => d.TEAM_NAME))];
@@ -116,7 +133,7 @@ d3.csv("stats_per_quarter.csv").then(data => {
       filteredPlayers = filteredPlayers.filter(d => d.TEAM_NAME === selectedTeam);
     }
 
-    const players = [...new Set(filteredPlayers.map(d => d.PLAYER_NAME))];
+    const players = calculatePlayerPoints(filteredPlayers); // [...new Set(filteredPlayers.map(d => d.PLAYER_NAME))];
 
     playerSelect.selectAll("option").remove();
 
