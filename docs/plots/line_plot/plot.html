@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Player Performance Visualization</title>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .axis path,
+    .axis line {
+      fill: none;
+      shape-rendering: crispEdges;
+    }
+    .line {
+      fill: none;
+      stroke: steelblue;
+      stroke-width: 1.5px;
+    }
+    .highlight {
+      stroke: red;
+      stroke-width: 2.5px;
+    }
+    .overlay {
+      fill: none;
+      pointer-events: all;
+    }
+  </style>
+</head>
+<body>
+  <label for="seasonSelect">Season: </label>
+  <select id="seasonSelect"></select>
+
+  <label for="playerSelect">Player: </label>
+  <select id="playerSelect"></select>
+
+
+  <svg width="960" height="500"></svg>
+
+  <script src="plot.js"></script>
+</body>
+</html>
