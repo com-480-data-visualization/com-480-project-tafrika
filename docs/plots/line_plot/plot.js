@@ -35,6 +35,7 @@ const playerCard = {
     three_points_attempted: document.getElementById("player3ptsAttempted"),
     fgm: document.getElementById("playerFGM"),
     three_points_made: document.getElementById("player3ptsMade"),
+    image: document.getElementById("playerImage")
   };
 
 d3.csv("stats_per_quarter.csv").then(data => {
@@ -44,6 +45,7 @@ d3.csv("stats_per_quarter.csv").then(data => {
     d.FIELD_GOAL_PERCENTAGE = +d.FIELD_GOAL_PERCENTAGE;
     d.THREE_PTS_PERCENTAGE_MADE = +d.THREE_PTS_PERCENTAGE_MADE;
     d.QUARTER = +d.QUARTER - 1;
+    d.PLAYER_ID = d.PLAYER_ID;
   });
 
   console.log("Data loaded:", data);
@@ -142,6 +144,7 @@ d3.csv("stats_per_quarter.csv").then(data => {
           playerCard.three_points_attempted.textContent = d3.mean(playerData, d => d.THREE_PTS_MADE_COUNT).toFixed(2);
           playerCard.fgm.textContent = d3.mean(playerData, d => d.FIELD_GOAL_PERCENTAGE).toFixed(2);
           playerCard.three_points_made.textContent = d3.mean(playerData, d => d.THREE_PTS_PERCENTAGE_MADE).toFixed(2);
+          playerCard.image.src = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${player.PLAYER_ID}.png`;
         } else {
           playerCard.name.textContent = "Player Name";
           playerCard.position.textContent = "N/A";
