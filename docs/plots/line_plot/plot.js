@@ -213,6 +213,7 @@ d3.csv("stats_per_quarter.csv").then(data => {
         .on("click", function(event, d) {
             const clickedPlayer = d[0];
             playerSelect.property("value", clickedPlayer);
+            updatePlayerCard();
             update();
           });
 
