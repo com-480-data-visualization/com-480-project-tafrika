@@ -9,17 +9,16 @@ let colorScale;
 let dropdownsActive = false;
 
 // dimensions
-const margin = { top: 60, right: 60, bottom: 60, left: 60 };
-const width = 600 - margin.left - margin.right;
-const height = 400 - margin.top - margin.bottom;
+const margin = { top: 5, right: 5, bottom: 30, left: 60 };
+const width = 500;
+const height = 500;
 
 this.svg = d3
     .select("#scatterPlot")
     .append("svg")
     .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", `translate(${margin.left}, ${margin.top})`);
+    .attr("height", height + margin.top + margin.bottom);
+//.attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 //Get the svg dimensions
 const playerCard = {
@@ -32,7 +31,7 @@ const playerCard = {
     metric_1_value: document.getElementById("metric-1-value"),
     metric_2_column: document.getElementById("metric-2-column"),
     metric_2_value: document.getElementById("metric-2-value"),
-  };
+};
 
 let teamToID = {}; // dictionary converting team nickname to team_id
 const metricsDict = {
@@ -60,9 +59,8 @@ function roundToTwoDecimals(number) {
     return (Math.round(number * 100) / 100).toFixed(2);
 }
 function updatePlayerCard(d) {
-    console.log(d);
 
-    
+
     const player = d; // Assuming data contains consistent records for each player/season
 
     playerCard.name.textContent = player.PLAYER_NAME;
@@ -73,18 +71,18 @@ function updatePlayerCard(d) {
     playerCard.metric_1_column.textContent = metric_1_Select.property("value") + ":";
     const metric_1_value = roundToTwoDecimals(d[metricsDict[metric_1_Select.property("value")]]);
     playerCard.metric_1_value.textContent = metric_1_value;
-    if(metric_1_Select.property("value") == metric_2_Select.property("value") ){
+    if (metric_1_Select.property("value") == metric_2_Select.property("value")) {
         playerCard.metric_2_column.textContent = "";
         playerCard.metric_2_value.textContent = "";
-    }else {
+    } else {
         playerCard.metric_2_column.textContent = metric_2_Select.property("value") + ":";
         const metric_2_value = roundToTwoDecimals(d[metricsDict[metric_2_Select.property("value")]]);
         playerCard.metric_2_value.textContent = metric_2_value;
 
     }
     playerCard.image.src = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${player.PLAYER_ID}.png`;
-    
-  }
+
+}
 function mouseOver(event, d) {
     const prevR = d3.select(this).attr("r");
     const prevColour = d3.select(this).style("fill");
@@ -96,7 +94,7 @@ function mouseOver(event, d) {
         .attr("r", 6) // Enlarge the circle slightly
         .attr("original-colour", prevColour)
         .style("fill", "orange");
-    
+
     updatePlayerCard(d);
 
 }
@@ -276,7 +274,7 @@ function handlePosition(changeScale) {
     playerData.forEach((element) => {
         if (element["POSITION"]) positions.add(element["POSITION"]);
     });
-    console.log("positions"+positions);
+    console.log("positions" + positions);
     if (changeScale) colorScale = generateColorScale(Array.from(positions));
     circles.attr("fill", function (d) {
         return colorScale(d["POSITION"]);
@@ -320,8 +318,8 @@ function createScatter(metric1, metric2) {
     const yExtent = d3.extent(playerData, (d) => +d[metric2]);
     xScale = d3
         .scaleLinear()
-        .domain([0, xExtent[1]]) 
-        .range([margin.left, width - margin.right]);
+        .domain([0, xExtent[1]])
+        .range([margin.left, width + margin.left + margin.right]);
 
     yScale = d3
         .scaleLinear()
@@ -343,7 +341,6 @@ function createScatter(metric1, metric2) {
         .attr("fill", "steelblue")
         .on("mouseover", mouseOver)
         .on("mouseout", mouseOut);
-    console.log(circles);
     svg.append("g")
         .attr("class", "x-axis")
         .attr("transform", `translate(0, ${height - margin.bottom})`)
@@ -356,12 +353,12 @@ function createScatter(metric1, metric2) {
 
     svg.append("text")
         .attr("class", "axis-title")
-        .attr("x", width / 2)
-        .attr("y", height - 6)
+        .attr("x", (width + margin.left + margin.right) / 2)
+        .attr("y", height)
         .style("text-anchor", "middle")
         .style("font-size", "14px")
         .style("font-weight", "bold")
-        .text(metric1);
+        .text(metric_1_Select.property("value"));
 
     svg.append("text")
         .attr("class", "axis-title")
@@ -371,7 +368,7 @@ function createScatter(metric1, metric2) {
         .style("text-anchor", "middle")
         .style("font-size", "14px")
         .style("font-weight", "bold")
-        .text(metric2);
+        .text(metric_2_Select.property("value"));
 
     mouseInteractions();
 }
@@ -424,7 +421,7 @@ function handleSelect(metChange, catChange) {
         }
     } else {
         const category = catSelect.property("value");
-        console.log("category"+category);
+        console.log("category" + category);
         dropdownsActive = false;
         if (
             selectedMetric1 != "--Metric 1--" &&
@@ -454,11 +451,11 @@ Promise.all([
     playerData = values[0];
 
     metric_1_Select = createMetric1DD();
-    console.log("metric_1_Select"+metric_1_Select);
+    console.log("metric_1_Select" + metric_1_Select);
     metric_2_Select = createMetric2DD();
-    console.log("metric_2_Select"+metric_2_Select);
+    console.log("metric_2_Select" + metric_2_Select);
     catSelect = createCategoryDD();
-    console.log("catSelect   "+catSelect);
+    console.log("catSelect   " + catSelect);
     metric_1_Select.on("change", function () {
         handleSelect(true, false);
     });
@@ -466,7 +463,6 @@ Promise.all([
         handleSelect(true, false);
     });
     catSelect.on("change", function () {
-        console.log("okok");
         handleSelect(false, true);
     });
 });
