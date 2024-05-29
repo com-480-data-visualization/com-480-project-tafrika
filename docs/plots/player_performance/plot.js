@@ -95,6 +95,7 @@ function mouseOver(event, d) {
         .attr("original-colour", prevColour)
         .style("fill", "orange");
 
+    showPlayerCard();
     updatePlayerCard(d);
 
 }
@@ -107,7 +108,7 @@ function mouseOut(event, d) {
         .duration(200)
         .style("fill", originalColour)
         .attr("r", originalSize); // Restore the original circle size
-
+    hidePlayerCard();
 }
 
 function mouseInteractions() {
@@ -478,4 +479,12 @@ function whenDocumentLoaded(action) {
 
 function initPlayerPerf() {
     perf_object = new PlayerPerf("scatterPlot", "perfcontainer");
+}
+
+function showPlayerCard() {
+    document.getElementById("playerCard").style.visibility = "visible";
+}
+
+function hidePlayerCard() {
+    document.getElementById("playerCard").style.visibility = "hidden";
 }
