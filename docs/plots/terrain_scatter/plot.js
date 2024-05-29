@@ -1,6 +1,6 @@
 // Width and height of the SVG
-const width = 400;
-const height = 400;
+const width = 550;
+const height = 550;
 
 // Append SVG to the body of the page and set the width and height
 const svg = d3.select("#scatterplot")
@@ -15,6 +15,16 @@ svg.append("image")
     .attr("width", width)
     .attr("height", height);
 
+
+const playerCard = {
+    name: document.getElementById("playerName"),
+    position: document.getElementById("playerPosition"),
+    team: document.getElementById("playerTeam"),
+    totalCount: document.getElementById("playerTotalCount"),
+    madePercentage: document.getElementById("playerMadePercentage"),
+    image: document.getElementById("playerImage")
+};
+
 // Sample data points
 // const data = [
 //     { x: 50, y: 9.2, r: 10 },
@@ -23,15 +33,13 @@ svg.append("image")
 
 // Function to update the plot
 function updatePlot(data) {
-    //var data = structuredClone(orig_data);
-    console.log("updatePlot", data);
     if (season == season_default || team == team_default || player == player_default) {
         return;
     }
 
     terrain_center = { x: 50, y: 10.5 };
     data = data.filter(d => (d["team_name"] == team) && (d["season"] == season) && (d["player_name"] == player));
-    if (filter_selection.column != "None" && filter_selection.value != "All") {
+    if (filter_selection.column != filter_selection_default.column && filter_selection.value != filter_selection_default.value) {
         data = data.filter(d => d[filter_selection.column] == filter_selection.value);
     }
 
@@ -61,16 +69,19 @@ function updatePlot(data) {
         .style("opacity", 0.6);
 
     circles.exit().remove();
+    playerData = data[0];
+    updatePlayerCard(data, playerData);
 }
 
 season_default = "--Season--";
 team_default = "--Team--";
 player_default = "--Player--";
+const filter_selection_default = { "column": "None", "value": "All" };
 
 season = season_default;
 team = team_default;
 player = player_default;
-
+filter_selection = structuredClone(filter_selection_default);
 
 
 
@@ -80,10 +91,10 @@ filter_fields = [
         "column": "BASIC_ZONE", "label": "Basic Zone", "values": ['All', 'Left Corner 3', 'Above the Break 3', 'Restricted Area', 'Mid-Range', 'In The Paint (Non-RA)', 'Right Corner 3', 'Backcourt']
     },
     {
-        "column": "ZONE_RANGE", "label": "Shot Zone Range", "values": ['All', '24+ ft.', 'Less Than 8 ft.', '8-16 ft.', '16-24 ft.', 'Back Court Shot']
+        "column": "ZONE_RANGE", "label": "Shot Zone Range", "values": ['All', 'Less Than 8 ft.', '8-16 ft.', '16-24 ft.', '24+ ft.', 'Back Court Shot']
     },
     {
-        "column": "ZONE_NAME", "label": "Zone Name", "values": ['All', 'Left Side', 'Center', 'Left Side Center', 'Right Side Center', 'Right Side', 'Back Court']
+        "column": "ZONE_NAME", "label": "Zone Name", "values": ['All', 'Left Side', 'Left Side Center', 'Center', 'Right Side Center', 'Right Side', 'Back Court']
     },
     {
         "column": "ZONE_ABB", "label": "Shot Zone Basic", "values": ['All', 'L', 'C', 'LC', 'RC', 'R', 'BC']
@@ -93,18 +104,16 @@ filter_fields = [
 
 
 
-filter_selection = { "column": "None", "value": "all" };
 
 handle_selection_displays({ season: season, team: team, player: player, filter: filter_selection });
 
 
 // Load data from a JSON file
 d3.csv("df_plot_1.csv").then(data => {
-    console.log(data);
     data = data.map(d => {
         return {
-            x: (parseFloat(d["LOC_X"]) + 25) / 50 * 100,
-            y: parseFloat(d["LOC_Y"]) / 50 * 100,
+            x: ((parseFloat(d["LOC_X"]) + 25) / 50 * 100),
+            y: ((parseFloat(d["LOC_Y"])) / 50 * 100),
             player_id: (d["PLAYER_ID"]),
             player_name: (d["PLAYER_NAME"]),
             season: (d["SEASON"]),
@@ -143,19 +152,23 @@ d3.csv("df_plot_1.csv").then(data => {
         season = d3.select(this).property('value');
         update_list("#team-select", get_teams_list(data, season));
         update_list("#player-select", get_players_list(data, season, team));
+        reset_fields("season");
         handle_selection_displays({ season: season, team: team, player: player, filter: filter_selection });
+
         updatePlot(data);
     });
     d3.select("#team-select").on("change", function () {
         team = d3.select(this).property('value');
         players = get_players_list(data, season, team);
         update_list("#player-select", players);
+        reset_fields("team");
         handle_selection_displays({ season: season, team: team, player: player, filter: filter_selection });
         updatePlot(data);
     }
     );
     d3.select("#player-select").on("change", function () {
         player = d3.select(this).property('value');
+        reset_fields("player");
         handle_selection_displays({ season: season, team: team, player: player, filter: filter_selection });
         updatePlot(data);
     });
@@ -163,7 +176,7 @@ d3.csv("df_plot_1.csv").then(data => {
         filter_selection.column = d3.select(this).property('value');
         if (filter_selection.column != "None") {
             update_list("#filter-value-select", filter_fields.filter(f => f.column == filter_selection.column)[0].values);
-            filter_selection.value = "All";
+            filter_selection.value = filter_selection_default.value;
         }
         handle_selection_displays({ season: season, team: team, player: player, filter: filter_selection });
         updatePlot(data);
@@ -177,6 +190,33 @@ d3.csv("df_plot_1.csv").then(data => {
 
 });
 
+
+
+function reset_fields(updated_value) {
+    if (updated_value == "season") {
+        team = team_default;
+        player = player_default;
+        // filter_selection = structuredClone(filter_selection_default);
+        // filter_columns = filter_fields.map(f => f.column);
+        // filter_columns = ["None", ...filter_columns];
+        // update_list("#filter-column-select", filter_columns);
+    }
+    else if (updated_value == "team") {
+        player = player_default;
+        // filter_selection = structuredClone(filter_selection_default);
+        // filter_columns = filter_fields.map(f => f.column);
+        // filter_columns = ["None", ...filter_columns];
+        // update_list("#filter-column-select", filter_columns);
+    }
+    else if (updated_value == "player") {
+        // filter_selection = structuredClone(filter_selection_default);
+        // filter_columns = filter_fields.map(f => f.column);
+        // filter_columns = ["None", ...filter_columns];
+        // update_list("#filter-column-select", filter_columns);
+    }
+
+
+}
 
 
 function get_players_list(data, season, team) {
@@ -217,7 +257,6 @@ function handle_selection_displays(current_selections) {
     has_selected_season = current_selections["season"] != season_default;
 
     filter_selection = current_selections["filter"];
-    console.log("filter_selection", filter_selection);
     has_selected_filter = filter_selection.column != "None";
 
 
@@ -302,3 +341,26 @@ function handle_selection_displays(current_selections) {
 //     );
 
 // }
+
+
+
+function updatePlayerCard(filtered_data, playerData) {
+    if (playerData) {
+
+        totalCount = filtered_data.length;
+        shotsMade = filtered_data.filter(d => d.made == "True").length;
+        playerCard.name.textContent = playerData.player_name;
+        playerCard.team.textContent = playerData.team_name;
+        playerCard.totalCount.textContent = totalCount;
+        playerCard.madePercentage.textContent = String((shotsMade / totalCount * 100).toFixed(2)) + "%";
+        playerCard.image.src = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${playerData.player_id}.png`;
+    } else {
+
+        playerCard.name.textContent = "Player Name";
+        playerCard.position.textContent = "N/A";
+        playerCard.team.textContent = "N/A";
+        playerCard.points.textContent = "N/A";
+        playerCard.rebounds.textContent = "N/A";
+        playerCard.assists.textContent = "N/A";
+    }
+}

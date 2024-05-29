@@ -9,6 +9,7 @@
             #scatterplot {
                 border: 1px solid #ccc;
             }*/
+            
         </style>
 
         <!-- Font Awesome -->
@@ -17,6 +18,7 @@
         <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
         <!-- MDB -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.0/mdb.min.css" rel="stylesheet" />
+        <link href="style.css" rel="stylesheet" />
     </head>
 
     <body>
@@ -73,13 +75,53 @@
 
         </table>
 
+        <table style="margin-left: auto;margin-right: auto; margin-top: 50px; ">
+            <tr>
+                <td>
+                    <div id="scatterplot" style="max-width: fit-content; margin-inline: auto;"></div>
+                </td>
+                <td>
+                    <div class="player-card" id="playerCard">
+                        <table>
+                            <tr>
+                                
 
+                                    <img id="playerImage" src="" alt="Player Image" style="width:100%; height:auto;">
+                                
+                            </tr>
+                            <tr>
+                                <td style="height: 100px; text-align: center;">
+                                    <h3 id="playerName">Player Name</h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p><strong>Position:</strong> <span id="playerPosition">N/A</span></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p><strong>Team:</strong> <span id="playerTeam">N/A</span></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p><strong>Total shots:</strong> <span id="playerTotalCount">N/A</span></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p><strong>Shots Made:</strong> <span id="playerMadePercentage">N/A</span></p>
+                                </td>
+                            </tr>
 
+                        </table>
+                        <!-- Add more statistics as needed -->
+                    </div>
+                </td>
+            </tr>
 
-
-
-
-        <div id="scatterplot" style="max-width: fit-content; margin-inline: auto;"></div>
+        </table>
         <script src="https://d3js.org/d3.v7.min.js"></script>
         <script src="plot.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.0/mdb.umd.min.js"></script>

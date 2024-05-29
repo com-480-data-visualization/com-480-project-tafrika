@@ -1,0 +1,13 @@
+.player-card {
+    vertical-align: middle;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    width: 200px;
+    height: 550px;
+    margin-left: 25px;
+}
+
+.player-card h3 {
+    margin-top: 0;
+}
