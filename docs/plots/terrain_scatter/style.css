@@ -11,3 +11,16 @@
 .player-card h3 {
     margin-top: 0;
 }
+
+
+.hidden {
+    opacity: 0;
+    overflow: hidden;
+    transition: opacity 0.5s ease, height 0.5s ease;
+}
+
+/* Visible state of the div */
+.visible {
+    opacity: 1;
+    transition: opacity 0.5s ease, height 0.5s ease;
+}
