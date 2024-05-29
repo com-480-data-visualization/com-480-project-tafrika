@@ -10,8 +10,8 @@ let dropdownsActive = false;
 
 // dimensions
 const margin = { top: 60, right: 60, bottom: 60, left: 60 };
-const width = 800 - margin.left - margin.right;
-const height = 600 - margin.top - margin.bottom;
+const width = 600 - margin.left - margin.right;
+const height = 400 - margin.top - margin.bottom;
 
 this.svg = d3
     .select("#scatterPlot")
@@ -22,20 +22,31 @@ this.svg = d3
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 //Get the svg dimensions
+const playerCard = {
+    name: document.getElementById("playerName"),
+    position: document.getElementById("playerPosition"),
+    positionGroup: document.getElementById("playerPositionGroup"),
+    team: document.getElementById("playerTeam"),
+    image: document.getElementById("playerImage"),
+    metric_1_column: document.getElementById("metric-1-column"),
+    metric_1_value: document.getElementById("metric-1-value"),
+    metric_2_column: document.getElementById("metric-2-column"),
+    metric_2_value: document.getElementById("metric-2-value"),
+  };
 
 let teamToID = {}; // dictionary converting team nickname to team_id
 const metricsDict = {
     //PLAYER_ID,points_per_game,three_pts_made,fg_made,field_goal_percentage,three_pts_percentage,dribbles_per_shot,touch_time_per_shot,defender_distance_per_shot,fg_pct_when_defender,average_distance_when_defender,total_defended_shots,PLAYER_NAME,TEAM_NAME,POSITION,POSITION_GROUP
     "Points per game": "points_per_game",
-    "Three pointers made": "three_pts_made",
-    "Field goals made": "fg_made",
+    "Three pointers made per game": "three_pts_made",
+    "Field goals made per game": "fg_made",
     "Field goal percentage": "field_goal_percentage",
     "Three point percentage": "three_pts_percentage",
     "Dribbles per shot": "dribbles_per_shot",
     "Touch time per shot": "touch_time_per_shot",
-    "Defender distance per shot": "defender_distance_per_shot",
-    "Field goal percentage when defended": "fg_pct_when_defender",
-    "Average distance when defended": "average_distance_when_defender",
+    "Average distance when shooter": "defender_distance_per_shot",
+    "Field goal percentage when defender": "fg_pct_when_defender",
+    "Average distance when defender": "average_distance_when_defender",
     "Total defended shots": "total_defended_shots",
 };
 
@@ -48,7 +59,32 @@ const categoriesDict = {
 function roundToTwoDecimals(number) {
     return (Math.round(number * 100) / 100).toFixed(2);
 }
+function updatePlayerCard(d) {
+    console.log(d);
 
+    
+    const player = d; // Assuming data contains consistent records for each player/season
+
+    playerCard.name.textContent = player.PLAYER_NAME;
+    playerCard.position.textContent = player.POSITION;
+    playerCard.positionGroup.textContent = player.POSITION_GROUP;
+    playerCard.team.textContent = player.TEAM_NAME;
+
+    playerCard.metric_1_column.textContent = metric_1_Select.property("value") + ":";
+    const metric_1_value = roundToTwoDecimals(d[metricsDict[metric_1_Select.property("value")]]);
+    playerCard.metric_1_value.textContent = metric_1_value;
+    if(metric_1_Select.property("value") == metric_2_Select.property("value") ){
+        playerCard.metric_2_column.textContent = "";
+        playerCard.metric_2_value.textContent = "";
+    }else {
+        playerCard.metric_2_column.textContent = metric_2_Select.property("value") + ":";
+        const metric_2_value = roundToTwoDecimals(d[metricsDict[metric_2_Select.property("value")]]);
+        playerCard.metric_2_value.textContent = metric_2_value;
+
+    }
+    playerCard.image.src = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${player.PLAYER_ID}.png`;
+    
+  }
 function mouseOver(event, d) {
     const prevR = d3.select(this).attr("r");
     const prevColour = d3.select(this).style("fill");
@@ -60,50 +96,8 @@ function mouseOver(event, d) {
         .attr("r", 6) // Enlarge the circle slightly
         .attr("original-colour", prevColour)
         .style("fill", "orange");
-
-    // Select the player container to create the player card
-    var playerContainer = d3.select("#player-container");
-
-    // Clear existing contents
-    playerContainer.html("");
-
-    // Create a box to enclose the player card
-    const infoBox = playerContainer
-        .append("div")
-        .attr("class", "player-card");
-
-    var playerId = d['PLAYER_ID']
-    // if the player id is successfully recovered, add the player headshot
-    if (playerId !== null) {
-        // Append the player image
-        infoBox
-            .append("img")
-            .attr("class", "player-image")
-            .attr(
-                "src",
-                "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/" +
-                playerId +
-                ".png"
-            );
-    }
-
-    // Append the player name
-    infoBox
-        .append("div")
-        .attr("class", "player-name")
-        .text(d['PLAYER_NAME'] + " (" + d['TEAM_NAME'] + ")");
-
-    // Append the stats
-    infoBox
-        .append("div")
-        .attr("class", "stat-name")
-        .text(metricSelect.property("value") + ": " + roundToTwoDecimals(d[metric_1_Select]) )
-        .append("div")
-        .attr("class", "player-stat")
-        .text("Regular Season: " + roundToTwoDecimals(d[me]))
-        .append("div")
-        .attr("class", "player-stat")
-        .text("Playoffs: " + roundToTwoDecimals(d.po_stat));
+    
+    updatePlayerCard(d);
 
 }
 
@@ -116,8 +110,6 @@ function mouseOut(event, d) {
         .style("fill", originalColour)
         .attr("r", originalSize); // Restore the original circle size
 
-    // Remove the player information
-    d3.select("#player-container").html("");
 }
 
 function mouseInteractions() {
@@ -179,12 +171,7 @@ function generateColorScale(
 }
 
 function getTeamLogo(team) {
-    if (team === "BRK") {
-        team = "BKN";
-    } else if (team === "PHO") {
-        team = "PHX";
-    }
-    return "logos/" + team + "_2023.png";
+    return "logos/" + team + ".png";
 }
 
 function createLegend(legendArray, isTeam = false) {
@@ -310,6 +297,7 @@ function handlePositionGroup(changeScale) {
     circles.attr("fill", function (d) {
         return colorScale(d["POSITION_GROUP"]);
     });
+    createLegend(positionGroups);
 }
 
 /***
@@ -326,85 +314,6 @@ function createCategoryDD() {
     // });
 }
 
-function fillPlot() {
-    const dataArray = Object.values(playerData);
-
-    createCategoryDD();
-
-    const xExtent = d3.extent(dataArray, (d) => d.rs_stat);
-    const yExtent = d3.extent(dataArray, (d) => d.po_stat);
-    const maxExtent = Math.max(
-        Math.abs(xExtent[0]),
-        Math.abs(xExtent[1]),
-        Math.abs(yExtent[0]),
-        Math.abs(yExtent[1])
-    );
-    const offset = 1;
-    const padding = 50;
-
-    xScale = d3
-        .scaleLinear()
-        .domain([-maxExtent - offset, maxExtent + offset])
-        .range([margin.left + padding, margin.left + width - padding]);
-
-    yScale = d3
-        .scaleLinear()
-        .domain([-maxExtent - offset, maxExtent + offset])
-        .range([margin.top + height - padding, margin.top + padding]);
-
-    const xAxis = d3.axisBottom(xScale).ticks(5).tickFormat(d3.format("+"));
-    const yAxis = d3.axisLeft(yScale).ticks(5).tickFormat(d3.format("+"));
-
-    circles = svg
-        .selectAll("circle")
-        .data(playoffArray)
-        .enter()
-        .append("circle")
-        .attr("name", (d) => d.player_name)
-        .attr("cx", (d) => xScale(d.rs_stat))
-        .attr("cy", (d) => yScale(d.po_stat))
-        .attr("r", 4)
-        .attr("fill", "steelblue");
-
-    svg
-        .append("g")
-        .attr("transform", `translate(10, ${margin.top + height / 2 + 10})`)
-        .attr("class", "x-axis")
-        .call(xAxis);
-
-    svg
-        .append("g")
-        .attr("transform", `translate(${margin.left + width / 2 + 10}, 10)`)
-        .attr("class", "y-axis")
-        .call(yAxis);
-
-    // Add x-axis title
-    svg
-        .append("text")
-        .attr("class", "axis-title")
-        .attr("x", width / 2)
-        .attr("y", height + margin.top + margin.bottom - 5)
-        .style("text-anchor", "middle")
-        .style("font-size", "18px")
-        .style("font-weight", "bold")
-        .style("font-style", "italic")
-        .text("Regular Season " + metricSelect.property("value"));
-
-    // Add y-axis title
-    svg
-        .append("text")
-        .attr("class", "axis-title")
-        .attr("transform", "rotate(-90)")
-        .attr("x", -height / 2)
-        .attr("y", -margin.left + 25)
-        .style("text-anchor", "middle")
-        .style("font-size", "18px")
-        .style("font-weight", "bold")
-        .style("font-style", "italic")
-        .text("Playoff " + metricSelect.property("value"));
-
-    mouseInteractions();
-}
 
 function createScatter(metric1, metric2) {
     const xExtent = d3.extent(playerData, (d) => +d[metric1]);
