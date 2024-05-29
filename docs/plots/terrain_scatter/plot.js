@@ -2,16 +2,14 @@
 const width = 550;
 const height = 550;
 
-// Append SVG to the body of the page and set the width and height
 const svg = d3.select("#scatterplot")
     .append("svg")
     .attr("style", "outline: solid black 2px;")
     .attr("width", width)
     .attr("height", height);
 
-// Append the background image to the SVG
 svg.append("image")
-    .attr("xlink:href", "basketball_court.png")  // Specify your image path here
+    .attr("xlink:href", "basketball_court.png")
     .attr("width", width)
     .attr("height", height);
 
@@ -25,15 +23,9 @@ const playerCard = {
     image: document.getElementById("playerImage")
 };
 
-// Sample data points
-// const data = [
-//     { x: 50, y: 9.2, r: 10 },
-// ];
-
-
-// Function to update the plot
 function updatePlot(data) {
     if (season == season_default || team == team_default || player == player_default) {
+        svg.selectAll("circle").remove();
         return;
     }
 
@@ -44,14 +36,10 @@ function updatePlot(data) {
     }
 
     const circles = svg.selectAll("circle").data(data);
-    //value_domain = d3.extent(data, d => d[value_shown]);
     scales = {
         x: d3.scaleLinear().domain([0, 100]).range([0, width]),
         y: d3.scaleLinear().domain([0, 100]).range([height, 0])
-        //r: d3.scaleLinear().domain(value_domain).range([0, 5])
     };
-    //var colorMap = d3.scaleSequential().domain(value_domain).interpolator(d3.interpolateRgb("red", "green"));
-
     var colorMap = function (d) {
         if (d == "True") {
             return "green";
@@ -66,9 +54,16 @@ function updatePlot(data) {
         .attr("cy", d => scales["y"](d["y"]))
         .attr("r", d => 4)
         .style("fill", d => colorMap(d["made"]))
-        .style("opacity", 0.6);
+        .style("opacity", 0).transition()  // Start a transition
+        .duration(500)  // Duration of the animation (in milliseconds)
+        .ease(d3.easeCubicIn)  // Ease-in animation
+        .style("opacity", 0.6);  // Final state of the opacity
 
-    circles.exit().remove();
+    circles.exit().transition()
+        .duration(1000)
+        .ease(d3.easeCubicInOut)
+        .style("opacity", 0) // Optional: fade out before removing
+        .remove();
     playerData = data[0];
     updatePlayerCard(data, playerData);
 }
@@ -120,6 +115,7 @@ d3.csv("df_plot_1.csv").then(data => {
             made: (d["SHOT_MADE"]),
             team_id: (d["TEAM_ID"]),
             team_name: (d["TEAM_NAME"]),
+            position: (d["POSITION"]),
             SHOT_TYPE: (d["SHOT_TYPE"]),
             BASIC_ZONE: (d["BASIC_ZONE"]),
             ZONE_RANGE: (d["ZONE_RANGE"]),
@@ -260,6 +256,7 @@ function handle_selection_displays(current_selections) {
     has_selected_filter = filter_selection.column != "None";
 
 
+
     show_team_selector = has_selected_season;
 
     if (show_team_selector) {
@@ -271,7 +268,18 @@ function handle_selection_displays(current_selections) {
         d3.selectAll(".team-select-class").style("display", "none");
     }
     show_player_selector = has_selected_season && has_selected_team;
-
+    if (has_selected_player) {
+        //d3.select("#player-card").style("display", "block");
+        element = document.getElementById('player-card');
+        element.classList.remove('hidden');
+        element.classList.add('visible');
+    }
+    else {
+        //d3.select("#player-card").style("display", "none");
+        element = document.getElementById('player-card');
+        element.classList.remove('visible');
+        element.classList.add('hidden');
+    }
 
 
     if (show_player_selector) {
@@ -350,17 +358,18 @@ function updatePlayerCard(filtered_data, playerData) {
         totalCount = filtered_data.length;
         shotsMade = filtered_data.filter(d => d.made == "True").length;
         playerCard.name.textContent = playerData.player_name;
+        playerCard.position.textContent = playerData.position;
         playerCard.team.textContent = playerData.team_name;
         playerCard.totalCount.textContent = totalCount;
         playerCard.madePercentage.textContent = String((shotsMade / totalCount * 100).toFixed(2)) + "%";
         playerCard.image.src = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${playerData.player_id}.png`;
     } else {
 
-        playerCard.name.textContent = "Player Name";
-        playerCard.position.textContent = "N/A";
-        playerCard.team.textContent = "N/A";
-        playerCard.points.textContent = "N/A";
-        playerCard.rebounds.textContent = "N/A";
-        playerCard.assists.textContent = "N/A";
+        playerCard.name.textContent = "";
+        playerCard.position.textContent = "";
+        playerCard.team.textContent = "";
+        playerCard.totalCount.textContent = "";
+        playerCard.madePercentage.textContent = "";
+        playerCard.image.src = "";
     }
 }
