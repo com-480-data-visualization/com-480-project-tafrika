@@ -1,21 +1,15 @@
 
 let circles;
-let combinedData;
-let playerData;
-let playoffData;
 let metric_1_Select;
 let metric_2_Select;
 let catSelect;
-let yearsDict;
 let xScale;
 let yScale;
 let colorScale;
-let playerName;
-let curTeam;
 let dropdownsActive = false;
 
 // dimensions
-const margin = { top: 0, right: 0, bottom: 0, left: 0 };
+const margin = { top: 60, right: 60, bottom: 60, left: 60 };
 const width = 800 - margin.left - margin.right;
 const height = 600 - margin.top - margin.bottom;
 
@@ -43,6 +37,12 @@ const metricsDict = {
     "Field goal percentage when defended": "fg_pct_when_defender",
     "Average distance when defended": "average_distance_when_defender",
     "Total defended shots": "total_defended_shots",
+};
+
+const categoriesDict = {
+    "Position": "POSITION",
+    "Position Category": "POSITION_GROUP",
+    "Team": "TEAM_NAME"
 };
 
 function roundToTwoDecimals(number) {
@@ -97,7 +97,7 @@ function mouseOver(event, d) {
     infoBox
         .append("div")
         .attr("class", "stat-name")
-        .text(metricSelect.property("value") + ": " + roundToTwoDecimals(d[metric_1_Select]) + " " + m.property("value"))
+        .text(metricSelect.property("value") + ": " + roundToTwoDecimals(d[metric_1_Select]) )
         .append("div")
         .attr("class", "player-stat")
         .text("Regular Season: " + roundToTwoDecimals(d[me]))
@@ -268,17 +268,18 @@ function getPlayerId(full_name) {
 */
 function handleTeam(changeScale) {
     var teams = new Set();
-    Object.values(playoffData).forEach((element) => {
-        if (element.TEAM_NAME) teams.add(element.TEAM_NAME);
+    playerData.forEach((element) => {
+        if (element["TEAM_NAME"]) teams.add(element["TEAM_NAME"]);
     });
     let sortedTeams = Array.from(teams);
     sortedTeams.sort();
     if (changeScale) colorScale = generateColorScale(sortedTeams);
     circles.attr("fill", function (d) {
-        return colorScale(d.TEAM_NAME);
+        return colorScale(d["TEAM_NAME"]);
     });
     createLegend(sortedTeams, true);
 }
+
 
 /***
  * Function to handle the position dropdown
@@ -286,11 +287,12 @@ function handleTeam(changeScale) {
 function handlePosition(changeScale) {
     var positions = new Set();
     playerData.forEach((element) => {
-        if (element.POSITION) positions.add(element.POSITION);
+        if (element["POSITION"]) positions.add(element["POSITION"]);
     });
+    console.log("positions"+positions);
     if (changeScale) colorScale = generateColorScale(Array.from(positions));
     circles.attr("fill", function (d) {
-        return colorScale(d.matchedItem.POSITION);
+        return colorScale(d["POSITION"]);
     });
 
     createLegend(positions);
@@ -302,11 +304,11 @@ function handlePosition(changeScale) {
 function handlePositionGroup(changeScale) {
     var positionGroups = new Set();
     playerData.forEach((element) => {
-        if (element.POSITION_GROUP) positionGroups.add(element.POSITION_GROUP);
+        if (element["POSITION_GROUP"]) positionGroups.add(element["POSITION_GROUP"]);
     });
     if (changeScale) colorScale = generateColorScale(Array.from(positionGroups));
     circles.attr("fill", function (d) {
-        return colorScale(d.matchedItem.POSITION_GROUP);
+        return colorScale(d["POSITION_GROUP"]);
     });
 }
 
@@ -318,9 +320,10 @@ function createCategoryDD() {
     catSelect.style("display", "block");
     const categories = ["--Category--", "Position", "Position Category", "Team"];
     populateDropdown(catSelect, categories);
-    catSelect.on("change", function () {
-        handleSelect(false, true);
-    });
+    return catSelect;
+    // catSelect.on("change", function () {
+    //     handleSelect(false, true);
+    // });
 }
 
 function fillPlot() {
@@ -406,21 +409,18 @@ function fillPlot() {
 function createScatter(metric1, metric2) {
     const xExtent = d3.extent(playerData, (d) => +d[metric1]);
     const yExtent = d3.extent(playerData, (d) => +d[metric2]);
-    console.log(xExtent);
-    console.log(yExtent);
     xScale = d3
         .scaleLinear()
-        .domain(xExtent)
+        .domain([0, xExtent[1]]) 
         .range([margin.left, width - margin.right]);
 
     yScale = d3
         .scaleLinear()
-        .domain(yExtent)
+        .domain([0, yExtent[1]])
         .range([height - margin.bottom, margin.top]);
     const xAxis = d3.axisBottom(xScale).ticks(5).tickFormat(d3.format(".2f"));
     const yAxis = d3.axisLeft(yScale).ticks(5).tickFormat(d3.format(".2f"));
-    console.log("xScale:"+xScale.domain());
-    console.log("yScale:"+yScale.domain());
+
     clearScatter();
 
     circles = svg
@@ -436,10 +436,12 @@ function createScatter(metric1, metric2) {
         .on("mouseout", mouseOut);
     console.log(circles);
     svg.append("g")
+        .attr("class", "x-axis")
         .attr("transform", `translate(0, ${height - margin.bottom})`)
         .call(xAxis);
 
     svg.append("g")
+        .attr("class", "y-axis")
         .attr("transform", `translate(${margin.left}, 0)`)
         .call(yAxis);
 
@@ -500,7 +502,7 @@ function handleSelect(metChange, catChange) {
     const selectedMetric1 = metric_1_Select.property("value");
     const selectedMetric2 = metric_2_Select.property("value");
 
-    if (catSelect == null) {
+    if (catSelect.property("value") == "--Category--") {
         if (selectedMetric1 != "--Metric 1--" && selectedMetric2 != "--Metric 2--") {
             dropdownsActive = true;
             // Now that both the options are selected, we can present our visualisation
@@ -513,6 +515,7 @@ function handleSelect(metChange, catChange) {
         }
     } else {
         const category = catSelect.property("value");
+        console.log("category"+category);
         dropdownsActive = false;
         if (
             selectedMetric1 != "--Metric 1--" &&
@@ -522,9 +525,9 @@ function handleSelect(metChange, catChange) {
             dropdownsActive = true;
             clearScatter();
             createScatter(metricsDict[selectedMetric1], metricsDict[selectedMetric2]);
-            if (category == "POSITION") handlePosition(catChange); // Only change the legend if the category is changed
-            if (category == "POSITION_GROUP") handlePositionGroup(catChange); // Only change the legend if the category is changed
-            if (category == "TEAM_NAME") handleTeam(!metChange); // Have to change if year is changed, since different teams make it to the playoffs
+            if (categoriesDict[category] == "POSITION") handlePosition(catChange); // Only change the legend if the category is changed
+            if (categoriesDict[category] == "POSITION_GROUP") handlePositionGroup(catChange); // Only change the legend if the category is changed
+            if (categoriesDict[category] == "TEAM_NAME") handleTeam(!metChange); // Have to change if year is changed, since different teams make it to the playoffs
         } else {
             dropdownsActive = false;
             // Reset, that is, Remove the visualisation (optional)
@@ -542,13 +545,20 @@ Promise.all([
     playerData = values[0];
 
     metric_1_Select = createMetric1DD();
+    console.log("metric_1_Select"+metric_1_Select);
     metric_2_Select = createMetric2DD();
-
+    console.log("metric_2_Select"+metric_2_Select);
+    catSelect = createCategoryDD();
+    console.log("catSelect   "+catSelect);
     metric_1_Select.on("change", function () {
         handleSelect(true, false);
     });
     metric_2_Select.on("change", function () {
         handleSelect(true, false);
+    });
+    catSelect.on("change", function () {
+        console.log("okok");
+        handleSelect(false, true);
     });
 });
 
