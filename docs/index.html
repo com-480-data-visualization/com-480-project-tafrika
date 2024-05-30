@@ -26,7 +26,7 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav">
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#viz1">* Viz 1 *</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#viz1">Spatial Visualization</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#viz2">* Viz 2 *</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#viz3">* Viz 3 *</a></li>
                 </ul>
@@ -37,46 +37,60 @@
             <!-- About-->
             <section class="resume-section" id="about">
                 <div class="resume-section-content">
-                    <h1 class="mb-0">
+                    <h1 class="mb-4">
                         Tafrika:
-                        <span class="text-primary">A basketball</span>
+                        <span class="text-primary">Where data meets basketball</span>
                     </h1>
                     <!--<div class="subheading mb-5">
                         3542 Berry Street · Cheyenne Wells, CO 80810 · (317) 585-8468 ·
                         <a href="mailto:name@email.com">name@email.com</a>
                     </div> -->
                     <p class="lead mb-5">
+                        Welcome to Tafrika, your go-to platform for exploring the world of basketball through data visualization.
+                        <br><br>
+                        Our interactive platform interactive platform is
+                        designed to provide you with an immersive experience in exploring and analyzing NBA player performance through
+                        cutting-edge visualizations. Whether you're a coach, analyst, or basketball enthusiast, our tools will help you uncover
+                        hidden patterns, develop winning strategies, and make data-driven decisions with confidence.
+                        <br><br>
                         
-                    Welcome to the Tafrika project, a comprehensive analysis of NBA shots.
-                    <br><br>
-                    For this project, two datasets will be leveraged:
-                    <br><br>
-                    
-                    The primary dataset was sourced from a comprehensive compilation available on GitHub from this link. The dataset
-                    provides a historical record of 4M NBA shots from 2004 to 2023, detailing player and team information, shot outcomes,
-                    and spatial data regarding shot locations.
-                    <br>
-                    The secondary dataset was collected from Kaggle and enriches the analysis with 128k shots with specific metrics from the
-                    2014/2015 season, such as closest defender and his distance from shooter, shot clock, dribbles and touch-time before the
-                    shot.</p>
+                        Imagine being able to pinpoint the exact spots on the court where your favorite player excels, compare player
+                        efficiencies across the league, and identify who steps up in clutch moments. With our visualizations, you can dive deep
+                        into the game, beyond the surface stats, to truly understand player dynamics and performance trends. Let's take a closer
+                        look at what you can discover with our powerful tools.
+                    </p>
                 </div>
             </section>
             <hr class="m-0" />
             <!-- Viz1-->
             <section class="resume-section" id="viz1">
                 <div class="resume-section-content">
-                    <h2 class="mb-5">Viz 1</h2>
+                    <h2 class="mb-5">Spatial Visualization</h2>
                     <!--<img class="img-fluid   mx-auto mb-2" src="assets/img/viz1.png" alt="..."  style="max-width: 50%; display: block;" /> -->
-                    <div style="max-width: fit-content; margin-inline: auto;"><iframe src="plots/terrain_scatter/plot.html" style="width: 900px; height: 700px;"></iframe></div>
                     <p>
-                        This visualization is a working skeleton of the terrain visualization. It will be used to display the spatial distribution of shots on the basketball court.
-                        The plots shown are the same as in the EDA, with a filter on the shot distance from the basket.
-                    </p>
-                    <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-                    aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                    
+                        Step onto the court with our interactive scatter map, where you can visualize every shot taken by a player. This tool
+                        places you right in the action, showing you the precise locations and outcomes of shots on a basketball court diagram.
+                        Imagine exploring the shooting patterns of stars like Stephen Curry or LeBron James, seeing where they hit their sweet
+                        spots and where they struggle.
+                        <br><br>
+                        
+                        <h5>How to Use It:</h5>
+                        <ul>
+                            <li>Select the season, team, and player to visualize their shot data.</li>
+                            <li>Apply filters to focus on specific shot types or areas.</li>
+                            <li>For each player, you get a player card that displays player details, number of shots, and their accuracy for the
+                                corresponding area.</li>
+                            </ul>
+                            <h5>
+                                Insights You Can Gain:
+                            </h5>
+                            <ul>
+                                <li>Identify shooting hotspots and cold zones for individual players.</li>
+                                <li>Develop targeted training drills and defensive strategies based on player tendencies.</li>
+                            </ul>
+                        </p>
+                    <div style="max-width: fit-content; margin-inline: auto;"><iframe src="plots/terrain_scatter/plot.html" style="width: 900px; height: 700px;"></iframe></div>
+                        
                 </div>
             </section>
             <hr class="m-0" />
