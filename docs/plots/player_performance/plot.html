@@ -9,18 +9,26 @@
     
     <body>
         <div id="rs-v-po-container">
-            <h5>Select two different metrics</h5>
             <div id="perfcontainer">
                 <select id="perf-metric1-select" style="width: 300px; float: left"></select>
                 <select id="perf-metric2-select" style="width: 300px; float: left; margin-left: 50px"></select>
-                <select id="category" style="width: 100px"></select>
+                <select id="category" style="width: 100px; float: left; margin-left: 200px"></select>
             </div>
             <br />
             
             <div id="fullPlot">
-                <div class="plot-column" id="player-container" style="width: 35%"></div>
-                <div class="plot-column" id="scatterPlot" style="width: 55%"></div>
-                <div class="plot-column" id="legend-container" style="width: 10%"></div>
+                <div class="player-card" style="margin-top: 50px; visibility: hidden;" id="playerCard">
+                    <img id="playerImage" src="" alt="Player Image" style="width:100%; height:auto;">
+                    <h3 id="playerName">Player Name</h3>
+                    <p class="no-margin"><strong>Position:</strong> <span id="playerPosition">N/A</span></p>
+                    <p class="no-margin"><strong>Position category:</strong> <span id="playerPositionGroup">N/A</span></p>
+                    <p class="no-margin"><strong>Team:</strong> <span id="playerTeam">N/A</span></p>
+                    <p class="no-margin"> <strong id="metric-1-column"></strong> <span id="metric-1-value">N/A</span></p>
+                    <p class="no-margin"><strong id="metric-2-column"></strong> <span id="metric-2-value">N/A</span></p>
+                    <!-- Add more statistics as needed -->
+                </div>
+                <div class="plot-column" id="scatterPlot"></div>
+                <div class="plot-column" id="legend-container"></div>
             </div>
         </div>
         <script src="https://d3js.org/d3.v7.min.js"></script>

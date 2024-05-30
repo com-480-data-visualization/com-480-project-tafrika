@@ -289,27 +289,19 @@ th {
 
 
 #scatterPlot {
-    width: 800px;
-    height: 600px;
     /* border: 0px solid #ccc; */
-    margin-right: 50px;
-    margin-left: 25px;
     position: relative;
 }
 
 #legend-container {
-    /* display: flex;
-        flex-wrap: wrap; */
-    margin-left: 50px;
-    margin-right: 50px;
-    margin-top: 50px;
-    max-height: 500px;
-    width: 400px;
+    margin-right: 10px;
+    max-height: 450px;
     overflow-y: auto;
+    width: 200px;
+    /* Ensure a fixed width to prevent content overflow */
 }
 
 .plot-column {
-    flex: 1;
     padding: 10px;
 }
 
@@ -331,4 +323,21 @@ th {
     width: 200px;
     margin-left: auto;
     display: none;
+}
+
+
+
+.player-card {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 300px;
+}
+
+.player-card h3 {
+    margin-top: 0;
+}
+
+.no-margin {
+    margin: 0;
 }
