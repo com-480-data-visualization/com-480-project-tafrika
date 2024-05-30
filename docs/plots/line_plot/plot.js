@@ -72,6 +72,10 @@ d3.csv("stats_per_quarter.csv").then(data => {
   const positions = [...new Set(data.map(d => d.POSITION))];
   const teams = [...new Set(data.map(d => d.TEAM_NAME))];
 
+  console.log("Seasons:", seasons);
+  seasons.sort((a, b) => d3.descending(a, b));
+  console.log("Seasons:", seasons);
+
   seasonSelect.selectAll("option")
       .data(seasons)
       .enter()
