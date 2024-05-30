@@ -27,8 +27,8 @@
                 <ul class="navbar-nav">
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#viz1">Spatial Visualization</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#viz2">* Viz 2 *</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#viz3">* Viz 3 *</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#viz2">Player Comparative Analysis</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#viz3">Quarterly Performance</a></li>
                 </ul>
             </div>
         </nav>
@@ -97,33 +97,100 @@
             <!-- Viz2-->
             <section class="resume-section" id="viz2">
                 <div class="resume-section-content">
-                    <h2 class="mb-5">Viz 2</h2>
+                    <h2 class="mb-5">Player Comparative Analysis</h2>
+                    Dive into the heart of player performance with our comparative analysis scatter plot. This visualization lets you
+                    compare players across a wide range of offensive and defensive metrics, providing a clear picture of who dominates the
+                    court. Picture yourself evaluating the scoring efficiency of guards like James Harden against the defensive prowess of
+                    forwards like Kawhi Leonard, all in one dynamic chart.
+                    
+                    <h5>How to Use It:</h5>
+                    
+                    <ul>
+                        <li>
+                            Choose two metrics from the dropdown menus to plot on the x-axis and y-axis. These can be offensive (e.g., points per
+                            game) or defensive (e.g., opponent field goal percentage).
+                        </li>
+                        <li>
+                            For example, select "Points per Game" for the x-axis and "Three Pointers Made per Game" for the y-axis to find top
+                            scorers who excel at three-point shooting.
+                        </li>
+                        <li>
+                            Use the dropdown menu to categorize players by attributes like team or position. Each dot will be color-coded based
+                            on the selected category.
+                        </li>
+                        <li>
+                            Filter the data to focus on specific groups. For instance, choose "Houston Rockets" to compare only the players on
+                            that team.
+                        </li>
+                        <li>
+                            Hover over any dot to see detailed information about the player, including their name, team, and statistics for the
+                            selected metrics.
+                        </li>
+                    </ul>
+                    <h5>Insights You Can Gain:</h5>
+                    <ul>
+                        <li>
+                            Discover players who excel both offensively and defensively. For example, find those who score efficiently while
+                        </li>
+                        <li>
+                            Analyze metrics like "Shot Accuracy" and "Dribbles Before Shot" to distinguish between isolation players and
+                            catch-and-shoot specialists, gaining insights into their playing styles.
+                        </li>
+                        <li>
+                            Easily compare players within a team or position group. This can help in understanding the strengths and weaknesses
+                            of different players and making informed decisions about player roles and strategies.
+                        </li>
+                        <li>
+                            Use the comparative analysis to develop game plans. Identify which players are best suited for specific situations,
+                            such as needing a reliable scorer or a strong defender in clutch moments.
+                        </li>
+                    </ul>
                         <iframe src="plots/player_performance/plot.html" style="width: 1000px; height: 600px;"></iframe>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-                        aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                        occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </p>
-                        <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-                        aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                        occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                 </div>
             </section>
             <hr class="m-0" />
             <!-- Viz 3-->
             <section class="resume-section" id="viz3">
                 <div class="resume-section-content">
-                    <h2 class="mb-5">Viz 3</h2>
-                    <!-- <img class="img-fluid mx-auto mb-2" src="assets/img/viz3.png" alt="..." style="max-width: 30%; display: block;" /> -->
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-                    aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                    <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-                    aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <h2 class="mb-5">Quarterly Performance</h2>
+
+                    Experience the game in real-time with our quarter-by-quarter performance ranking graph. This visualization tracks player
+                    performance across each quarter, revealing who shines in clutch moments and who maintains consistency throughout the
+                    game. Imagine analyzing the fourth-quarter heroics of players like Kyrie Irving or the steady contributions of a star
+                    like Giannis Antetokounmpo.
+                    
+                    <h5>How to Use It:</h5>
+                    
+                    Choose the performance metric you want to analyze from the dropdown menu, such as points per quarter, field goal
+                    percentage (FG%), or three-pointers made.
+                    Filter by Season, Team, and Player:
+                    
+                    Use the dropdown menus to select the season, team, and player. For instance, choose the 2022-23 season and the Dallas
+                    Mavericks to see Kyrie Irving’s quarter-by-quarter stats.
+                    
+                    Each line on the graph represents a player's performance across the four quarters. click on a line to highlight it and
+                    display the player's detailed statistics on the right.
+                    
+                    The player card provides key details such as points per quarter, attempted three-pointers per quarter, field goal
+                    percentage, and more.
+                    
+                    Filter the graph by team or position to focus on specific groups. For example, selecting "Dallas Mavericks" will show
+                    only the players from that team, making it easier to compare their performances.
+                    
+                    <h5>Insights You Can Gain:</h5>
+                    <ul>
+                        <li>
+                            Identify players who excel in the fourth quarter or other critical moments. See who steps up when it matters most and
+                    can be relied upon in tight games.
+                        </li>
+                        <li>
+                            Discover players who consistently perform well across all quarters, providing steady contributions throughout the game.
+                        </li>
+                        <li>
+                    Use the data to inform coaching decisions, such as which players to keep on the court during crucial periods or how to
+                    adjust rotations to maximize performance.
+
+                        </li>
                     <div style="max-width: fit-content; margin-inline: auto;"><iframe src="plots/line_plot/plot.html" style="width: 1030px; height: 1250px;"></iframe></div>
                 </div>
                 </section>

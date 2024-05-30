@@ -55,6 +55,7 @@ const categoriesDict = {
     "Team": "TEAM_NAME"
 };
 
+
 function roundToTwoDecimals(number) {
     return (Math.round(number * 100) / 100).toFixed(2);
 }
@@ -275,7 +276,6 @@ function handlePosition(changeScale) {
     playerData.forEach((element) => {
         if (element["POSITION"]) positions.add(element["POSITION"]);
     });
-    console.log("positions" + positions);
     if (changeScale) colorScale = generateColorScale(Array.from(positions));
     circles.attr("fill", function (d) {
         return colorScale(d["POSITION"]);
@@ -375,6 +375,53 @@ function createScatter(metric1, metric2) {
 }
 
 
+function draw_empty_scatter() {
+    const xExtent = [0, 1];
+    const yExtent = [0, 1];
+    xScale = d3
+        .scaleLinear()
+        .domain([0, xExtent[1]])
+        .range([margin.left, width + margin.left + margin.right]);
+
+    yScale = d3
+        .scaleLinear()
+        .domain([0, yExtent[1]])
+        .range([height - margin.bottom, margin.top]);
+    const xAxis = d3.axisBottom(xScale).ticks(5).tickFormat(d3.format(".2f"));
+    const yAxis = d3.axisLeft(yScale).ticks(5).tickFormat(d3.format(".2f"));
+
+    clearScatter();
+    svg.append("g")
+        .attr("class", "x-axis")
+        .attr("transform", `translate(0, ${height - margin.bottom})`)
+        .call(xAxis);
+
+    svg.append("g")
+        .attr("class", "y-axis")
+        .attr("transform", `translate(${margin.left}, 0)`)
+        .call(yAxis);
+
+    svg.append("text")
+        .attr("class", "axis-title")
+        .attr("x", (width + margin.left + margin.right) / 2)
+        .attr("y", height)
+        .style("text-anchor", "middle")
+        .style("font-size", "14px")
+        .style("font-weight", "bold")
+        .text("X-axis");
+
+    svg.append("text")
+        .attr("class", "axis-title")
+        .attr("transform", "rotate(-90)")
+        .attr("x", -height / 2)
+        .attr("y", 16)
+        .style("text-anchor", "middle")
+        .style("font-size", "14px")
+        .style("font-weight", "bold")
+        .text("Y-axis");
+}
+
+
 function populateDropdown(selectElement, options) {
     selectElement
         .selectAll("option")
@@ -409,6 +456,12 @@ function handleSelect(metChange, catChange) {
     const selectedMetric1 = metric_1_Select.property("value");
     const selectedMetric2 = metric_2_Select.property("value");
 
+    if (selectedMetric1 == "--Metric 1--" || selectedMetric2 == "--Metric 2--") {
+        dropdownsActive = false;
+        clearScatter();
+        // Reset, that is, Remove the visualisation (optional)
+    }
+
     if (catSelect.property("value") == "--Category--") {
         if (selectedMetric1 != "--Metric 1--" && selectedMetric2 != "--Metric 2--") {
             dropdownsActive = true;
@@ -418,11 +471,11 @@ function handleSelect(metChange, catChange) {
         } else {
             dropdownsActive = false;
             clearScatter();
+            draw_empty_scatter();
             // Reset, that is, Remove the visualisation (optional)
         }
     } else {
         const category = catSelect.property("value");
-        console.log("category" + category);
         dropdownsActive = false;
         if (
             selectedMetric1 != "--Metric 1--" &&
@@ -445,6 +498,7 @@ function handleSelect(metChange, catChange) {
     }
 }
 let svg = this.svg;
+draw_empty_scatter();
 
 Promise.all([
     d3.csv("viz2_dataset.csv"),
@@ -452,11 +506,8 @@ Promise.all([
     playerData = values[0];
 
     metric_1_Select = createMetric1DD();
-    console.log("metric_1_Select" + metric_1_Select);
     metric_2_Select = createMetric2DD();
-    console.log("metric_2_Select" + metric_2_Select);
     catSelect = createCategoryDD();
-    console.log("catSelect   " + catSelect);
     metric_1_Select.on("change", function () {
         handleSelect(true, false);
     });
