@@ -10,50 +10,50 @@
 
 ## Milestone 1 (29th March, 5pm)
 
-**10% of the final grade**
-
-This is a preliminary milestone to let you set up goals for your final project and assess the feasibility of your ideas.
-Please, fill the following sections about your project.
-
-*(max. 2000 characters per section)*
-
-### Dataset
-
-> Find a dataset (or multiple) that you will explore. Assess the quality of the data it contains and how much preprocessing / data-cleaning it will require before tackling visualization. We recommend using a standard dataset as this course is not about scraping nor data processing.
->
-> Hint: some good pointers for finding quality publicly available datasets ([Google dataset search](https://datasetsearch.research.google.com/), [Kaggle](https://www.kaggle.com/datasets), [OpenSwissData](https://opendata.swiss/en/), [SNAP](https://snap.stanford.edu/data/) and [FiveThirtyEight](https://data.fivethirtyeight.com/)), you could use also the DataSets proposed by the ENAC (see the Announcements section on Zulip).
-
-### Problematic
-
-> Frame the general topic of your visualization and the main axis that you want to develop.
-> - What am I trying to show with my visualization?
-> - Think of an overview for the project, your motivation, and the target audience.
-
-### Exploratory Data Analysis
-
-> Pre-processing of the data set you chose
-> - Show some basic statistics and get insights about the data
-
-### Related work
-
-
-> - What others have already done with the data?
-> - Why is your approach original?
-> - What source of inspiration do you take? Visualizations that you found on other websites or magazines (might be unrelated to your data).
-> - In case you are using a dataset that you have already explored in another context (ML or ADA course, semester project...), you are required to share the report of that work to outline the differences with the submission for this class.
+The report for the milestone 2 is available in the `Milestone2.md` file.
 
 ## Milestone 2 (26th April, 5pm)
 
-**10% of the final grade**
-
+The report for the milestone 2 is available in the `Milestone2.md` file.
 
 ## Milestone 3 (31st May, 5pm)
 
-**80% of the final grade**
+The link to the video presentation in the `screencast.mp4` file.
+
+The process book can be found in the `process_book.pdf` file.
+
+The website is available at the following link: [https://com-480-data-visualization.github.io/com-480-project-tafrika/](https://com-480-data-visualization.github.io/com-480-project-tafrika/)
 
 
-## Late policy
+## Technical setup
 
-- < 24h: 80% of the grade for the milestone
-- < 48h: 70% of the grade for the milestone
+### To run the website locally
+To run the website locally, you first need to clone the repository:
+````
+git clone https://github.com/com-480-data-visualization/com-480-project-tafrika.git
+cd com-480-project-tafrika/docs
+````
+
+Then you run the following command:
+````
+python -m http.server
+````
+
+This will start a local server on port 8000. You can then access the website by going to `http://localhost:8000/` in your browser.
+
+
+### Website structure
+
+Inside the `docs` folder, there's the source code of the website.
+The website is structured as follows:
+- `index.html`: the main page of the website
+- `css/`: contains the css files for the main page
+- `js/`: contains the javascript files for the main page
+- `assets/`: contains the images used in the website
+- `plots/`: contains the plots used in the website
+
+Each plot is in a separate folder and represents a different visualization. They are self-contained and can be run independently. They are added to the main page using iframes.
+
+
+
 
